@@ -22,6 +22,8 @@ mutagen
 pymongo
 bs4
 motor
+shortzy
+pytz
 Shazamio
 youtube_search
 youtube-search-python
