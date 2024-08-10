@@ -25,11 +25,11 @@ headers = {
     "Referer": "https://saveig.app/en",
 }
 @Mbot.on_message(filters.regex(r'https?://.*instagram[^\s]+') & filters.incoming)
-async def link_handler(Mbot, message):
+async def link_handler(client, message):
     link = message.matches[0].group(0)
-    if not await check_verification(Mbot, message.from_user.id) and VERIFY == True:
+    if not await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
-            InlineKeyboardButton("Verify", url=await get_token(Mbot, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
         ],[
             InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
         ]]
@@ -119,8 +119,8 @@ async def link_handler(Mbot, message):
             await message.reply(f"400: Sorry, Unable To Find It Make Sure Its Publically Available :)")
         except Exception as e:
             if LOG_GROUP:
-               await Mbot.send_message(LOG_GROUP,f"Instagram {e} {link}")
-               await Mbot.send_message(LOG_GROUP, traceback.format_exc())
+               await client.send_message(LOG_GROUP,f"Instagram {e} {link}")
+               await client.send_message(LOG_GROUP, traceback.format_exc())
             await message.reply(f"400: Sorry, Unable To Find It  try another 🤖  ")
 
         finally:
