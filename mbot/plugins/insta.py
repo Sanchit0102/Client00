@@ -27,9 +27,9 @@ headers = {
 @Mbot.on_message(filters.regex(r'https?://.*instagram[^\s]+') & filters.incoming)
 async def link_handler(Mbot, message):
     link = message.matches[0].group(0)
-    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+    if not await check_verification(Mbot, message.from_user.id) and VERIFY == True:
         btn = [[
-            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+            InlineKeyboardButton("Verify", url=await get_token(Mbot, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
         ],[
             InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
         ]]
