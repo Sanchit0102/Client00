@@ -2,7 +2,9 @@ from pyrogram import filters, Client as Mbot
 import bs4, requests,re
 import wget,os,traceback,asyncio
 import time
+from verify import check_verification, get_token
 from mbot import LOG_GROUP as DUMP_GROUP,BUG as LOG_GROUP
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0",
     "Accept": "*/*",
@@ -97,12 +99,9 @@ async def link_handler(Mbot, message):
         except KeyError:
             await message.reply(f"400: Sorry, Unable To Find It Make Sure Its Publically Available :)")
         except Exception as e:
-          #  await message.reply_text(f"https://ddinstagram.com{content_value}")
             if LOG_GROUP:
                await Mbot.send_message(LOG_GROUP,f"Instagram {e} {link}")
                await Mbot.send_message(LOG_GROUP, traceback.format_exc())
-          #     await message.reply(tracemsg)
-            ##optinal 
             await message.reply(f"400: Sorry, Unable To Find It  try another 🤖  ")
 
         finally:
