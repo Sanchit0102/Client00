@@ -8,6 +8,21 @@ from verify import verify_user, check_token
 
 @Mbot.on_message(filters.command("start"))
 async def start(client,message):
+    reply_markup = [[
+        InlineKeyboardButton(
+            text="Update Channel", url="https://t.me/Silent_BOts"),
+        InlineKeyboardButton(
+            text="Developer",
+            url=f"https://t.me/THE_DS_OFFICIAL")
+        ],[
+        InlineKeyboardButton(text="Help",callback_data="helphome")
+        ]]
+    
+    if message.chat.type != "private" and message.chat.id not in AUTH_CHATS and message.from_user.id not in SUDO_USERS:
+        return await message.reply_text("This Bot Will Not Work In Groups Unless It's Authorized.",
+                    reply_markup=InlineKeyboardMarkup(reply_markup))
+    return await message.reply_text(f"<b>Hᴇʟʟᴏ {message.from_user.first_name},  Jᴀɪ Sʜʀᴇᴇ Rᴀᴍ...🙏🏻\n\nɪ ᴀᴍ ᴛʜᴇ ᴍᴏꜱᴛ ᴘᴏᴡᴇʀꜰᴜʟ Mᴇᴅɪᴀ Dᴏᴡɴʟᴏᴀᴅᴇʀ ʙᴏᴛ!\n\nI Cᴀɴ Dᴏᴡɴʟᴏᴀᴅ Vɪᴅᴇᴏꜱ Fʀᴏᴍ Iɴꜱᴛᴀɢʀᴀᴍ, Fᴀᴄᴇʙᴏᴏᴋ & Tᴡɪᴛᴛᴇʀ Aɴᴅ Dᴏᴡɴʟᴏᴀᴅ Mᴜꜱɪᴄ Fʀᴏᴍ Sᴘᴏᴛɪғʏ, Yᴏᴜᴛᴜʙᴇ, Dᴇᴇᴢᴇʀ, Sᴏᴜɴᴅᴄʟᴏᴜᴅ, Eᴛᴄ 🔥\n\n<blockquote>Uꜱᴇ /song Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴏᴡɴʟᴏᴀᴅ Aɴʏ Sᴏɴɢ Wɪᴛʜᴏᴜᴛ Lɪɴᴋ\nUꜱᴇ /lyrics Cᴏᴍᴍᴀɴᴅ Tᴏ Gᴇᴛ Lʏʀɪᴄꜱ Oғ Aɴʏ Sᴏɴɢ !</blockquote>\n\nJᴜꜱᴛ Sᴇɴᴅ Mᴇ Aɴʏ Mᴇᴅɪᴀ Lɪɴᴋ Aɴᴅ Sᴇᴇ Mᴀɢɪᴄ 🤞🏻✨.</b>",
+                    reply_markup=InlineKeyboardMarkup(reply_markup))
     data = message.command[1]
     if data.split("-", 1)[0] == "verify": # set if or elif it depend on your code
         userid = data.split("-", 2)[1]
@@ -29,21 +44,6 @@ async def start(client,message):
                 text="<b>Invalid link or Expired link !</b>",
                 protect_content=True
             )
-    reply_markup = [[
-        InlineKeyboardButton(
-            text="Update Channel", url="https://t.me/Silent_BOts"),
-        InlineKeyboardButton(
-            text="Developer",
-            url=f"https://t.me/THE_DS_OFFICIAL")
-        ],[
-        InlineKeyboardButton(text="Help",callback_data="helphome")
-        ]]
-    
-    if message.chat.type != "private" and message.chat.id not in AUTH_CHATS and message.from_user.id not in SUDO_USERS:
-        return await message.reply_text("This Bot Will Not Work In Groups Unless It's Authorized.",
-                    reply_markup=InlineKeyboardMarkup(reply_markup))
-    return await message.reply_text(f"<b>Hᴇʟʟᴏ {message.from_user.first_name},  Jᴀɪ Sʜʀᴇᴇ Rᴀᴍ...🙏🏻\n\nɪ ᴀᴍ ᴛʜᴇ ᴍᴏꜱᴛ ᴘᴏᴡᴇʀꜰᴜʟ Mᴇᴅɪᴀ Dᴏᴡɴʟᴏᴀᴅᴇʀ ʙᴏᴛ!\n\nI Cᴀɴ Dᴏᴡɴʟᴏᴀᴅ Vɪᴅᴇᴏꜱ Fʀᴏᴍ Iɴꜱᴛᴀɢʀᴀᴍ, Fᴀᴄᴇʙᴏᴏᴋ & Tᴡɪᴛᴛᴇʀ Aɴᴅ Dᴏᴡɴʟᴏᴀᴅ Mᴜꜱɪᴄ Fʀᴏᴍ Sᴘᴏᴛɪғʏ, Yᴏᴜᴛᴜʙᴇ, Dᴇᴇᴢᴇʀ, Sᴏᴜɴᴅᴄʟᴏᴜᴅ, Eᴛᴄ 🔥\n\n<blockquote>Uꜱᴇ /song Cᴏᴍᴍᴀɴᴅ Tᴏ Dᴏᴡɴʟᴏᴀᴅ Aɴʏ Sᴏɴɢ Wɪᴛʜᴏᴜᴛ Lɪɴᴋ\nUꜱᴇ /lyrics Cᴏᴍᴍᴀɴᴅ Tᴏ Gᴇᴛ Lʏʀɪᴄꜱ Oғ Aɴʏ Sᴏɴɢ !</blockquote>\n\nJᴜꜱᴛ Sᴇɴᴅ Mᴇ Aɴʏ Mᴇᴅɪᴀ Lɪɴᴋ Aɴᴅ Sᴇᴇ Mᴀɢɪᴄ 🤞🏻✨.</b>",
-                    reply_markup=InlineKeyboardMarkup(reply_markup))
 
 @Mbot.on_message(filters.command("restart") & filters.chat(OWNER_ID) & filters.private)
 async def restart(_,message):
