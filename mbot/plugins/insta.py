@@ -26,8 +26,6 @@ headers = {
 }
 @Mbot.on_message(filters.regex(r'https?://.*instagram[^\s]+') & filters.incoming)
 async def link_handler(Mbot, message):
-    MBot = client
-    message = message
     link = message.matches[0].group(0)
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
