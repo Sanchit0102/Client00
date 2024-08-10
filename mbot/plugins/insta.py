@@ -4,6 +4,12 @@ import wget,os,traceback,asyncio
 import time
 from verify import check_verification, get_token
 from mbot import LOG_GROUP as DUMP_GROUP,BUG as LOG_GROUP
+from dotenv import load_dotenv
+load_dotenv("config.env")
+
+VERIFY_TUTORIAL = environ['VERIFY_TUTORIAL']  
+BOT_USERNAME = environ['BOT_USERNAME']
+VERIFY = environ['VERIFY']
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0",
@@ -19,7 +25,21 @@ headers = {
 }
 @Mbot.on_message(filters.regex(r'https?://.*instagram[^\s]+') & filters.incoming)
 async def link_handler(Mbot, message):
+    MBot = client
+    message = message
     link = message.matches[0].group(0)
+    if not await check_verification(client, message.from_user.id) and VERIFY == True:
+        btn = [[
+            InlineKeyboardButton("Verify", url=await get_token(client, message.from_user.id, f"https://telegram.me/{BOT_USERNAME}?start="))
+        ],[
+            InlineKeyboardButton("How To Open Link & Verify", url=VERIFY_TUTORIAL)
+        ]]
+        await message.reply_text(
+            text="<b>You are not verified !\nKindly verify to continue !</b>",
+            protect_content=True,
+            reply_markup=InlineKeyboardMarkup(btn)
+        )
+        return
     try:
         m = await message.reply_sticker("CAACAgIAAxkBATWhF2Qz1Y-FKIKqlw88oYgN8N82FtC8AAJnAAPb234AAT3fFO9hR5GfHgQ")
         url= link.replace("instagram.com","ddinstagram.com")
