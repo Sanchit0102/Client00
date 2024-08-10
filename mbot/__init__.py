@@ -1,26 +1,3 @@
-"""MIT License
-
-Copyright (c) 2022 Daniel
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
 from pyrogram import Client
 from os import environ,sys,mkdir,path
 import logging
@@ -31,13 +8,11 @@ import pytz
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from sys import executable
-#from Python_ARQ import ARQ
 from aiohttp import ClientSession
 from dotenv import load_dotenv
 import shutil
 load_dotenv("config.env")
 import os 
-# Log
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(message)s",
     handlers = [logging.FileHandler('bot.log'), logging.StreamHandler()]
@@ -47,6 +22,11 @@ LOGGER = logging.getLogger(__name__)
 
 # Mandatory Variable
 try:
+    SHORTAPI = environ['SHORTAPI']
+    SHORTURL = environ['SHORTURL']
+    VERIFY_TUTORIAL = environ['VERIFY_TUTORIAL']  
+    BOT_USERNAME = environ['BOT_USERNAME']
+    VERIFY = environ['VERIFY']
     API_ID = int(environ['API_ID'])
     API_HASH = environ['API_HASH']
     BOT_TOKEN = environ['BOT_TOKEN']
@@ -54,7 +34,6 @@ try:
 except KeyError:
     LOGGER.debug("One or More ENV variable not found.")
     sys.exit(1)
-# Optional Variable
 F_SUB = environ['F_SUB']
 F_SUB_CHANNEL_ID = environ.get('F_SUB_CHANNEL_ID')
 F_SUB_CHANNEL_INVITE_LINK = environ.get('F_SUB_CHANNEL_INVITE_LINK')
@@ -73,19 +52,7 @@ if BUG:
 genius_api = environ.get("genius_api",None)
 if genius_api:
     genius_api = genius_api
-  # this code is removed :)
- #try:
- #   ARQ_API_KEY = environ['ARQ_API_KEY']
- #   ARQ_API_URL = "https://arq.hamker.in"
- #   aiohttpsession = ClientSession()
- #   arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
-
-#except Exception as e:
-#    pass
-#    print(f"python arq key is not a valid string skiping it ...! Reason:{e}")
-#   aiohttpsession = ClientSession()
-#    arq = None
-    
+  
 class Mbot(Client):
     def  __init__(self):
         name = self.__class__.__name__.lower()
@@ -99,22 +66,16 @@ class Mbot(Client):
             sleep_threshold=30
         )
     async def start(self):
-      #  os.system(f"rm -rf ./cache/")
-     #   os.system(f"mkdir ./cache/")
         global BOT_INFO
         await super().start()
         BOT_INFO = await self.get_me()
         if not path.exists('/tmp/thumbnails/'):
             mkdir('/tmp/thumbnails/')
-        # for chat in AUTH_CHATS:
-            # await self.send_photo(chat,"https://telegra.ph/file/97bc8a091ac1b119b72e4.jpg","**Spotify Downloa Started**")
         LOGGER.info(f"Bot Started As {BOT_INFO.username}\n")
     
     async def stop(self,*args):
         await super().stop()
         LOGGER.info("Bot Stopped, Bye.")
-
-# ================================================================ #
 
 RENDER_EXTERNAL_URL = environ.get("RENDER_EXTERNAL_URL", "http://localhost:5000")
 
